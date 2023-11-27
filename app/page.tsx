@@ -29,6 +29,7 @@ export default function Home() {
         <AppNavigation /> {/**App Navigation */}
       </Container>
     </React.Fragment>
+    
   )
 
 }
