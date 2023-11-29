@@ -16,6 +16,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import AddIcon from '@mui/icons-material/Add';
+import MenuList from '@mui/material/MenuList';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemText from '@mui/material/ListItemText';
 
 export default function Home() {
   return (
@@ -23,11 +27,31 @@ export default function Home() {
       <CssBaseline />
       <Container fixed>
         <Box sx={{ margin: 5 }} />
-        <Listofbooks />
+        <Grid container spacing={2}>
+          <Grid item xs={2}>
+            <AppMenu />
+          </Grid>
+          <Grid item xs={10}>
+            <Listofbooks />
+          </Grid>
+        </Grid>
         <AppNavigation /> {/**App Navigation */}
       </Container>
     </React.Fragment>
   );
+}
+
+function AppMenu() {
+  return (
+    <Paper>
+      <MenuList>
+        <MenuItem href="/books/add" component="a">
+          <AddIcon />
+          <ListItemText>Add book</ListItemText>
+        </MenuItem>
+      </MenuList>
+    </Paper>
+  )
 }
 
 function Listofbooks() {
