@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -15,32 +17,28 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 
-
 export default function Home() {
   return (
-
-
     <React.Fragment>
       <CssBaseline />
-
       <Container fixed>
         <Box sx={{ margin: 5 }} />
         <Listofbooks />
         <AppNavigation /> {/**App Navigation */}
       </Container>
     </React.Fragment>
-    
-  )
-
+  );
 }
 
-const books = [
-  { title: 'Programming in C', author: 'robert Green', address: 'Towlichowki', type: 'FREE',image:"https://m.media-amazon.com/images/I/61FmuzUH8AL._AC_UF1000,1000_QL80_.jpg" },
-  { title: 'Programming in Java', author: 'Robert Frost', address: 'mehdipatnam', type: 'FREE',image:"https://d2sofvawe08yqg.cloudfront.net/functional-programming-in-js-with-categories/s_hero2x?1620603202" },
-  { title: 'Programming in JS', author: 'Frankeistien', address: 'Banjara Hills', type: 'FREE',image:"https://m.media-amazon.com/images/I/411t3aQzVaL.jpg" },
-  { title: 'Programming in Python', author: 'Harper', address: 'Panjagutta', type: 'FREE',image:"https://m.media-amazon.com/images/I/411t3aQzVaL.jpg" }
-]
 function Listofbooks() {
+  const [books, setBooks] = React.useState([]);
+
+  React.useEffect(function () {
+    fetchBooks().then(resp => {
+      setBooks(resp);
+    });
+  }, []);
+
   return (
     <Grid container spacing={2}>
       {books.map((book, idx) => (
@@ -50,6 +48,7 @@ function Listofbooks() {
             author={book.author}
             address={book.address}
             type={book.type}
+            image={book.image}
           />
         </Grid>
       ))}
@@ -57,6 +56,12 @@ function Listofbooks() {
   );
 }
 
+async function fetchBooks() {
+  const url = 'http://localhost:3000/api/books';
+  const response = await fetch(url);
+  const data = await response.json();
+  return data.data;
+}
 
 function AppNavigation() {
   return (
