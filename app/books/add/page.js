@@ -19,6 +19,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 export default function Home() {
   return (
@@ -44,15 +46,97 @@ export default function Home() {
 }
 
 function AddBookForm() {
+  const [formData, setFormData] = React.useState({
+    title: '',
+    author: '',
+    address: 'tolichowki',
+    type: 'new',
+    price: 0,
+    image: 'https://m.media-amazon.com/images/I/61FmuzUH8AL._AC_UF1000,1000_QL80_.jpg'
+  });
+  const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOpen(false);
+  };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:3000/api/books', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setSnackbarOpen(true);
+        console.log('Book added successfully:', result.data);
+        // Redirect to the homepage
+        // OR if not using react-router-dom
+        window.location.href = '/';
+        // You can perform additional actions here if needed
+      } else {
+        console.error('Failed to add book:', response.statusText);
+        // Handle the error as needed
+      }
+    } catch (error) {
+      console.error('Error adding book:', error.message);
+      // Handle the error as needed
+    }
+  };
+
   return (
-    <form>
-      <AppInput placeholder="Enter book title" required />
-      <AppInput placeholder="Enter book author" required />
+    <form onSubmit={handleSubmit}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Book added successfully!
+        </MuiAlert>
+      </Snackbar>
+
+      <AppInput
+        placeholder="Enter book title"
+        required
+        name="title"
+        value={formData.title}
+        onChange={handleInputChange}
+      />
+      <AppInput
+        placeholder="Enter book author"
+        required
+        name="author"
+        value={formData.author}
+        onChange={handleInputChange}
+      />
 
       <Box sx={{ margin: 2 }}>
         <RadioGroup
-          name="book-condition"
+          name="type"
           required
+          value={formData.type}
+          onChange={handleInputChange}
         >
           <FormControlLabel value="new" control={<Radio />} label="New" />
           <FormControlLabel value="used_new" control={<Radio />} label="Used – Like New" />
@@ -65,7 +149,9 @@ function AddBookForm() {
         placeholder="Enter book price"
         type="number"
         required
-        defaultValue={0}
+        name="price"
+        value={formData.price}
+        onChange={handleInputChange}
         startAdornment={<InputAdornment position="start">₹</InputAdornment>}
       />
 
