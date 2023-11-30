@@ -49,8 +49,8 @@ function AddBookForm() {
   const [formData, setFormData] = React.useState({
     title: '',
     author: '',
-    address: 'tolichowki',
-    type: 'new',
+    address: '',
+    condition: 'New',
     price: 0,
     image: 'https://m.media-amazon.com/images/I/61FmuzUH8AL._AC_UF1000,1000_QL80_.jpg'
   });
@@ -130,18 +130,25 @@ function AddBookForm() {
         value={formData.author}
         onChange={handleInputChange}
       />
+      <AppInput
+        placeholder="Enter location, e.g: Mehdipatnam, Tolichowki"
+        required
+        name="address"
+        value={formData.address}
+        onChange={handleInputChange}
+      />
 
       <Box sx={{ margin: 2 }}>
         <RadioGroup
-          name="type"
+          name="condition"
           required
-          value={formData.type}
+          value={formData.condition}
           onChange={handleInputChange}
         >
-          <FormControlLabel value="new" control={<Radio />} label="New" />
-          <FormControlLabel value="used_new" control={<Radio />} label="Used – Like New" />
-          <FormControlLabel value="used_good" control={<Radio />} label="Used – Good" />
-          <FormControlLabel value="used_fair" control={<Radio />} label="Used – Fair" />
+          <FormControlLabel value="New" control={<Radio />} label="New" />
+          <FormControlLabel value="Used – Like New" control={<Radio />} label="Used – Like New" />
+          <FormControlLabel value="Used – Good" control={<Radio />} label="Used – Good" />
+          <FormControlLabel value="Used – Fair" control={<Radio />} label="Used – Fair" />
         </RadioGroup>
       </Box>
 
@@ -163,7 +170,7 @@ function AddBookForm() {
         </Grid>
         <Grid item>
           <Button variant="contained" size="large" type="submit">
-            Submit
+            View
           </Button>
         </Grid>
       </Grid>

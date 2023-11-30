@@ -68,10 +68,12 @@ function Listofbooks() {
       {books.map((book, idx) => (
         <Grid item xs={4} key={idx}>
           <BookCard
+            id={book._id}
             title={book.title}
             author={book.author}
             address={book.address}
-            type={book.type}
+            condition={book.condition}
+            price={book.price}
             image={book.image}
           />
         </Grid>
@@ -116,16 +118,28 @@ function BookCard(props) {
           {props.author}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {props.address}
+          Localty: {props.address}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {props.type}
+        <Typography variant="caption" color="text.secondary">
+          Condition: {props.condition}
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {formatPrice(props.price)}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Call</Button>
-        <Button size="small">Message</Button>
+        <Button variant="contained" size="small" href={`/books/${props.id}`}>
+          View
+        </Button>
       </CardActions>
     </Card>
   );
+}
+
+function formatPrice(price) {
+  if (!price) {
+    return 'FREE';
+  }
+
+  return `₹${price.toLocaleString()}`;
 }

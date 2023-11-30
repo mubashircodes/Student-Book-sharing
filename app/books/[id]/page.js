@@ -12,6 +12,8 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Typography, Card, CardContent, CardMedia } from '@mui/material';
+import CardActions from '@mui/material/CardActions';
+import Button from '@mui/material/Button';
 
 export default function Home({ params }) {
   return (
@@ -26,7 +28,7 @@ export default function Home({ params }) {
           direction="row"
           alignItems="center">
           <Grid item xs={6}>
-            <BookDetail id={params.id}/>
+            <BookDetail id={params.id} />
           </Grid>
         </Grid>
 
@@ -76,12 +78,26 @@ const BookDetail = (props) => {
             <Typography variant="h5" component="div">
               {book.title}
             </Typography>
+            <Typography variant="h5" component="div">
+              {formatPrice(book.price)}
+            </Typography>
             <Typography variant="subtitle1" color="text.secondary">
               Author: {book.author}
+            </Typography>
+            <Typography variant="subtitle1" color="text.secondary">
+              Localty: {book.address}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              Condition: {book.condition}
             </Typography>
             <Typography variant="body1">{book.description}</Typography>
             {/* Add other book details as needed */}
           </CardContent>
+          <CardActions>
+            <Button variant="outlined" size="small" href={`/`}>
+              Go Back
+            </Button>
+          </CardActions>
         </Card>
       ) : (
         <Typography variant="body1">Book not found</Typography>
@@ -89,7 +105,6 @@ const BookDetail = (props) => {
     </Box>
   );
 };
-
 
 function AppNavigation() {
   return (
@@ -102,4 +117,12 @@ function AppNavigation() {
       </BottomNavigation>
     </Paper>
   );
+}
+
+function formatPrice(price) {
+  if (!price) {
+    return 'FREE';
+  }
+
+  return `₹${price.toLocaleString()}`;
 }

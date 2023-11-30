@@ -2,7 +2,6 @@ import { MongoClient } from 'mongodb'
 
 // Connection URL
 const url = process.env.DATABASE_URI;
-console.log(url);
 const client = new MongoClient(url);
 const dbName = 'student-resources-db';
 
@@ -18,10 +17,17 @@ export async function GET() {
 
 export async function POST(request) {
   // Assuming the request body contains the book information in JSON format
-  const { title, author, address, type, image } = await request.json();
+  const {
+    title,
+    author,
+    address,
+    condition,
+    price,
+    image,
+  } = await request.json();
 
   // Validate required fields
-  if (!title || !author || !address || !type || !image) {
+  if (!title || !author || !address || !condition || !price || !image) {
     return new Response('Missing required fields', { status: 400 });
   }
 
@@ -34,14 +40,14 @@ export async function POST(request) {
     title,
     author,
     address,
-    type,
+    condition,
+    price,
     image,
     createdAt: new Date(),
   };
 
   // Insert the new book into the collection
   const result = await booksCollection.insertOne(newBook);
-  console.log(result)
 
   // Check if the insertion was successful
   if (result.insertedId)  {
