@@ -194,8 +194,8 @@ function AppNavigation() {
       <BottomNavigation
         showLabels
       >
-        <BottomNavigationAction label="Student Resource Sharing" icon={<MenuBookIcon />} />
-        <BottomNavigationAction label="Food Rescource Sharing" icon={<FoodBankIcon />} />
+        <BottomNavigationAction href='/' label="Student Resource Sharing" icon={<MenuBookIcon />} />
+        <BottomNavigationAction href='/food' label="Food Rescource Sharing" icon={<FoodBankIcon />} />
       </BottomNavigation>
     </Paper>
   );

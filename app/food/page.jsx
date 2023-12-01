@@ -32,7 +32,7 @@ export default function Home() {
             <AppMenu />
           </Grid>
           <Grid item xs={10}>
-            <Listofbooks />
+            <ListofFoods />
           </Grid>
         </Grid>
         <AppNavigation /> {/**App Navigation */}
@@ -45,36 +45,35 @@ function AppMenu() {
   return (
     <Paper>
       <MenuList>
-        <MenuItem href="/books/add" component="a">
+        <MenuItem href="/food/add" component="a">
           <AddIcon />
-          <ListItemText>Add book</ListItemText>
+          <ListItemText>Donate</ListItemText>
         </MenuItem>
       </MenuList>
     </Paper>
   )
 }
 
-function Listofbooks() {
-  const [books, setBooks] = React.useState([]);
+function ListofFoods() {
+  const [foods, setFoods] = React.useState([]);
 
   React.useEffect(function () {
-    fetchBooks().then(resp => {
-      setBooks(resp);
+    fetchFood().then(resp => {
+      setFoods(resp);
     });
   }, []);
 
   return (
     <Grid container spacing={2}>
-      {books.map((book, idx) => (
+      {foods.map((food, idx) => (
         <Grid item xs={4} key={idx}>
-          <BookCard
-            id={book._id}
-            title={book.title}
-            author={book.author}
-            address={book.address}
-            condition={book.condition}
-            price={book.price}
-            image={book.image}
+          <FoodCard
+            id={food._id}
+            title={food.title}
+            quantity={food.quantity}
+            address={food.address}
+            expirydate={food.expirydate}
+            image={food.image}
           />
         </Grid>
       ))}
@@ -82,8 +81,8 @@ function Listofbooks() {
   );
 }
 
-async function fetchBooks() {
-  const url = 'http://localhost:3000/api/books';
+async function fetchFood() {
+  const url = 'http://localhost:3000/api/food';
   const response = await fetch(url);
   const data = await response.json();
   return data.data;
@@ -102,7 +101,7 @@ function AppNavigation() {
   );
 }
 
-function BookCard(props) {
+function FoodCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -115,20 +114,17 @@ function BookCard(props) {
           {props.title}
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          {props.author}
+          {props.quantity}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Localty: {props.address}
         </Typography>
         <Typography variant="caption" color="text.secondary">
-          Condition: {props.condition}
-        </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {formatPrice(props.price)}
+          Expiry Date: {props.expirydate}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" size="small" href={`/books/${props.id}`}>
+        <Button variant="contained" size="small" href={`/food/${props.id}`}>
           View
         </Button>
       </CardActions>
