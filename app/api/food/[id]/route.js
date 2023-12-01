@@ -11,19 +11,19 @@ export async function GET(request, { params }) {
 
   try {
     const db = client.db(dbName);
-    const booksCollection = db.collection('books');
+    const foodsCollection = db.collection('foods');
 
-    // If an ID is provided, fetch a specific book by ID
-    const book = await booksCollection.findOne({ _id: new ObjectId(id) });
-    console.log(`Found documents filtered by { a: ${id} } =>`, book);
+    // If an ID is provided, fetch a specific food by ID
+    const food = await foodsCollection.findOne({ _id: new ObjectId(id) });
+    console.log(`Found documents filtered by { a: ${id} } =>`, food);
 
-    if (!book) {
-      return Response.json({ data: null }); // Book not found
+    if (!food) {
+      return Response.json({ data: null }); // food not found
     }
 
-    return Response.json({ data: book });
+    return Response.json({ data: food });
   } catch (error) {
-    console.error('Error fetching books:', error);
+    console.error('Error fetching foods:', error);
     return Response.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

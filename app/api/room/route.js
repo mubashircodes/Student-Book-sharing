@@ -9,47 +9,51 @@ export async function GET() {
   await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
-  const foodsCollection = db.collection('foods');
-  const foods = await foodsCollection.find({}).sort({ createdAt: -1 }).toArray();
+  const roomsCollection = db.collection('rooms');
+  const rooms = await roomsCollection.find({}).sort({ createdAt: -1 }).toArray();
 
-  return Response.json({ data: foods });
+  return Response.json({ data: rooms });
 }
 
 export async function POST(request) {
-  // Assuming the request body contains the book information in JSON format
+  // Assuming the request body contains the food information in JSON format
   const {
     title,
-    quantity,
-    address,
-    expirydate,
     image,
+    condition,
+    price,
+    contact,
+    description,
+    address,
   } = await request.json();
 
   // Validate required fields
-  if (!title || !quantity || !address || !expirydate || !image) {
+  if (!title || !image || !condition || !price || !contact || !description || !address) {
     return new Response('Missing required fields', { status: 400 });
   }
 
   await client.connect();
   const db = client.db(dbName);
-  const foodsCollection = db.collection('foods');
+  const roomsCollection = db.collection('rooms');
 
-  // Create a new book document
-  const newFood = {
+  // Create a new room document
+  const newRoom = {
     title,
-    quantity,
-    address,
-    expirydate,
     image,
+    condition,
+    price,
+    contact,
+    description,
+    address,
     createdAt: new Date(),
   };
 
-  // Insert the new book into the collection
-  const result = await foodsCollection.insertOne(newFood);
+  // Insert the new food into the collection
+  const result = await roomsCollection.insertOne(newRoom);
 
   // Check if the insertion was successful
   if (result.insertedId)  {
-    // Return the new book as part of the response
+    // Return the new food as part of the response
     return new Response(JSON.stringify({ id: result.insertedId }), { status: 201, headers: { 'Content-Type': 'application/json' } });
   } else {
     return new Response('Failed to add food', { status: 500 });
