@@ -21,6 +21,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { AppNavigation } from '../../src/app_navigation';
 
 export default function Home() {
   return (
@@ -170,7 +171,7 @@ function AddBookForm() {
         </Grid>
         <Grid item>
           <Button variant="contained" size="large" type="submit">
-            View
+            Save
           </Button>
         </Grid>
       </Grid>
@@ -188,15 +189,3 @@ function AppInput(props) {
   );
 }
 
-function AppNavigation() {
-  return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation
-        showLabels
-      >
-        <BottomNavigationAction href='/' label="Student Resource Sharing" icon={<MenuBookIcon />} />
-        <BottomNavigationAction href='/food' label="Food Rescource Sharing" icon={<FoodBankIcon />} />
-      </BottomNavigation>
-    </Paper>
-  );
-}

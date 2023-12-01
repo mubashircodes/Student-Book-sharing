@@ -1,16 +1,11 @@
 'use client'
 
 import * as React from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import MenuFoodIcon from '@mui/icons-material/MenuFood';
-import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
+import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
@@ -18,6 +13,10 @@ import MuiAlert from '@mui/material/Alert';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AppNavigation } from '../../src/app_navigation';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 export default function Home() {
     return (
@@ -49,8 +48,8 @@ function AddFoodForm() {
         title: '',
         quantity: '',
         address: '',
-        expirydate: '',
-        image: 'https://m.media-amazon.com/images/I/61FmuzUH8AL._AC_UF1000,1000_QL80_.jpg'
+        expirydate: null,
+        image: ''
     });
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
@@ -64,6 +63,42 @@ function AddFoodForm() {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const onChooseImage = (event) => {
+        const file = event.target.files[0];
+
+        if (file && file.type.match('image.*')) {
+            const reader = new FileReader();
+
+            reader.onload = (readEvent) => {
+                const image = new Image();
+                image.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxSideLength = 300;
+
+                    if (image.width > image.height) {
+                        canvas.width = maxSideLength;
+                        canvas.height = (image.height / image.width) * maxSideLength;
+                    } else {
+                        canvas.height = maxSideLength;
+                        canvas.width = (image.width / image.height) * maxSideLength;
+                    }
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                    const dataURI = canvas.toDataURL('image/jpeg');
+
+                    // Update your formData here
+                    setFormData({ ...formData, image: dataURI });
+                };
+
+                image.src = readEvent.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleSubmit = async (event) => {
@@ -84,7 +119,7 @@ function AddFoodForm() {
                 console.log('Food added successfully:', result.data);
                 // Redirect to the homepage
                 // OR if not using react-router-dom
-                window.location.href = '/';
+                window.location.href = '/food';
                 // You can perform additional actions here if needed
             } else {
                 console.error('Failed to add Food:', response.statusText);
@@ -114,6 +149,38 @@ function AddFoodForm() {
                 </MuiAlert>
             </Snackbar>
 
+            <Box sx={{ margin: 2 }}>
+                {formData.image && (
+                    <Alert severity="success">
+                        <AlertTitle>File attached successfully!</AlertTitle>
+                        <img
+                            src={formData.image}  // Replace with your state variable holding the data URI
+                            alt="Preview"
+                            style={{ height: '24px', marginRight: '10px' }}
+                        />
+                    </Alert>
+                )}
+                <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
+                    Upload image
+                    <input
+                        type="file"
+                        onChange={onChooseImage}
+                        accept="image/jpeg, image/png"
+                        style={{
+                            clip: 'rect(0 0 0 0)',
+                            clipPath: 'inset(50%)',
+                            height: 1,
+                            overflow: 'hidden',
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            whiteSpace: 'nowrap',
+                            width: 1,
+                        }}
+                    />
+                </Button>
+            </Box>
+
             <AppInput
                 placeholder="Enter food title ex: Pizza, Biryani"
                 required
@@ -137,11 +204,12 @@ function AddFoodForm() {
             />
 
             <Box sx={{ margin: 2 }}>
-            <DatePicker />
-                
+                <DatePicker
+                    format="DD/MMM/YYYY"
+                    value={formData.expirydate} onChange={(newValue) => setFormData({ ...formData, ["expirydate"]: newValue })} />
             </Box>
 
-            
+
 
             <Grid container justifyContent="center" alignItems="center" spacing={2}>
                 <Grid item>
@@ -151,7 +219,7 @@ function AddFoodForm() {
                 </Grid>
                 <Grid item>
                     <Button variant="contained" size="large" type="submit">
-                        View
+                        Save
                     </Button>
                 </Grid>
             </Grid>
@@ -166,18 +234,5 @@ function AppInput(props) {
                 <OutlinedInput {...props} />
             </FormControl>
         </Box>
-    );
-}
-
-function AppNavigation() {
-    return (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <BottomNavigation
-                showLabels
-            >
-                <BottomNavigationAction href='/' label="Student Resource Sharing" icon={<MenuFoodIcon />} />
-                <BottomNavigationAction href='/food' label="Food Rescource Sharing" icon={<FoodBankIcon />} />
-            </BottomNavigation>
-        </Paper>
     );
 }

@@ -16,45 +16,43 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  // Assuming the request body contains the book information in JSON format
+  // Assuming the request body contains the food information in JSON format
   const {
     title,
-    author,
+    quantity,
     address,
-    condition,
-    price,
+    expirydate,
     image,
   } = await request.json();
 
   // Validate required fields
-  if (!title || !author || !address || !condition || !price || !image) {
+  if (!title || !quantity || !address || !expirydate || !image) {
     return new Response('Missing required fields', { status: 400 });
   }
 
   await client.connect();
   const db = client.db(dbName);
-  const booksCollection = db.collection('books');
+  const foodsCollection = db.collection('foods');
 
-  // Create a new book document
-  const newBook = {
+  // Create a new food document
+  const newFood = {
     title,
-    author,
+    quantity,
     address,
-    condition,
-    price,
+    expirydate,
     image,
     createdAt: new Date(),
   };
 
-  // Insert the new book into the collection
-  const result = await booksCollection.insertOne(newBook);
+  // Insert the new food into the collection
+  const result = await foodsCollection.insertOne(newFood);
 
   // Check if the insertion was successful
   if (result.insertedId)  {
-    // Return the new book as part of the response
+    // Return the new food as part of the response
     return new Response(JSON.stringify({ id: result.insertedId }), { status: 201, headers: { 'Content-Type': 'application/json' } });
   } else {
-    return new Response('Failed to add book', { status: 500 });
+    return new Response('Failed to add food', { status: 500 });
   }
 }
 

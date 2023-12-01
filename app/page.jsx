@@ -20,6 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
+import { AppNavigation } from './src/app_navigation';
 
 export default function Home() {
   return (
@@ -87,19 +88,6 @@ async function fetchBooks() {
   const response = await fetch(url);
   const data = await response.json();
   return data.data;
-}
-
-function AppNavigation() {
-  return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation
-        showLabels
-      >
-        <BottomNavigationAction label="Student Resource Sharing" icon={<MenuBookIcon />} />
-        <BottomNavigationAction href='/food' label="Food Rescource Sharing" icon={<FoodBankIcon />} />
-      </BottomNavigation>
-    </Paper>
-  );
 }
 
 function BookCard(props) {

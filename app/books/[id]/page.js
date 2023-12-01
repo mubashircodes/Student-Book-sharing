@@ -1,19 +1,15 @@
 'use client'
 
 import * as React from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
 import { CircularProgress, Typography, Card, CardContent, CardMedia } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
+import { AppNavigation } from '../../src/app_navigation';
 
 export default function Home({ params }) {
   return (
@@ -105,19 +101,6 @@ const BookDetail = (props) => {
     </Box>
   );
 };
-
-function AppNavigation() {
-  return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation
-        showLabels
-      >
-        <BottomNavigationAction label="Student Resource Sharing" icon={<MenuBookIcon />} />
-        <BottomNavigationAction label="Food Rescource Sharing" icon={<FoodBankIcon />} />
-      </BottomNavigation>
-    </Paper>
-  );
-}
 
 function formatPrice(price) {
   if (!price) {

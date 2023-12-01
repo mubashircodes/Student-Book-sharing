@@ -20,6 +20,9 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
+import { AppNavigation } from '../src/app_navigation';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import dayjs from 'dayjs';
 
 export default function Home() {
   return (
@@ -46,7 +49,7 @@ function AppMenu() {
     <Paper>
       <MenuList>
         <MenuItem href="/food/add" component="a">
-          <AddIcon />
+          <VolunteerActivismIcon />
           <ListItemText>Donate</ListItemText>
         </MenuItem>
       </MenuList>
@@ -88,19 +91,6 @@ async function fetchFood() {
   return data.data;
 }
 
-function AppNavigation() {
-  return (
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-      <BottomNavigation
-        showLabels
-      >
-        <BottomNavigationAction label="Student Resource Sharing" icon={<MenuBookIcon />} />
-        <BottomNavigationAction href='/food' label="Food Rescource Sharing" icon={<FoodBankIcon />} />
-      </BottomNavigation>
-    </Paper>
-  );
-}
-
 function FoodCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -120,7 +110,7 @@ function FoodCard(props) {
           Localty: {props.address}
         </Typography>
         <Typography variant="caption" color="text.secondary">
-          Expiry Date: {props.expirydate}
+          Expiry Date: {dayjs(props.expirydate).format('DD MMM YYYY')}
         </Typography>
       </CardContent>
       <CardActions>
