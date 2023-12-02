@@ -1,23 +1,33 @@
 'use client'
 
 import * as React from 'react';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
+import Paper from '@mui/material/Paper';
+import FormControl, { useFormControl } from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import FormHelperText from '@mui/material/FormHelperText';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AppNavigation } from '../../src/app_navigation';
-import { ImageUploadButton } from '../../src/image_upload_button'; 
-
+import { ImageUploadButton } from '../../src/image_upload_button';
+import AuthPage from '../../src/auth_page';
+import { UserContext } from '../../src/auth_page';
 export default function Home() {
     return (
+        <AuthPage>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <React.Fragment>
                 <CssBaseline />
@@ -38,16 +48,19 @@ export default function Home() {
                 </Container>
             </React.Fragment>
         </LocalizationProvider>
+        </AuthPage>
     );
 }
 
 function AddFoodForm() {
+    const user = React.useContext(UserContext);
     const [formData, setFormData] = React.useState({
         title: '',
         quantity: '',
         address: '',
         expirydate: null,
-        image: ''
+        image: '',
+        userEmail: user.userEmail,
     });
     const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 

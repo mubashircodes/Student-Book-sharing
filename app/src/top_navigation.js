@@ -49,7 +49,7 @@ export function TopNav(props) {
                 color="inherit"
               >
                 <Avatar sx={{ bgcolor: deepOrange[500] }}>
-                  {props.user.signInDetails.loginId.slice(0, 1).toUpperCase()}
+                  {props.user?.signInDetails?.loginId.slice(0, 1).toUpperCase()}
                 </Avatar>
               </IconButton>
               <Menu

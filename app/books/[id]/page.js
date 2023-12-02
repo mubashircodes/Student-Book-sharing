@@ -93,11 +93,6 @@ const BookDetail = (props) => {
             <Button variant="outlined" size="small" href={`/`}>
               Go Back
             </Button>
-            {book.userEmail && (
-              <Button variant="contained" size="small" href={`mailto:${book.userEmail}`}>
-                Contact
-              </Button>
-            )}
           </CardActions>
         </Card>
       ) : (

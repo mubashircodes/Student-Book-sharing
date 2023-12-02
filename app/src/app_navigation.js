@@ -21,10 +21,10 @@ export function AppNavigation() {
               <BottomNavigationAction href="/food" label="Food" icon={<VolunteerActivismIcon />} />
               <BottomNavigationAction href="/room" label="Rooms" icon={<AddHomeIcon />} />
               <BottomNavigationAction href="/equipment" label="Equipment Rental" icon={<DevicesIcon />} />
-              {/* <BottomNavigationAction href="/equipment" label="Tution Listings" icon={<SchoolIcon />} /> */}
-              {/* <BottomNavigationAction href="/equipment" label="Volunteer Opportunities" icon={<GroupIcon />} /> */}
-              {/* <BottomNavigationAction href="/equipment" label="Lost & Found" icon={<AutoModeIcon />} /> */}
-              {/* <BottomNavigationAction href="/equipment" label="Ride Sharing" icon={<TwoWheelerIcon />} /> */}
+              { <BottomNavigationAction href="/equipment" label="Tution Listings" icon={<SchoolIcon />} /> }
+              { <BottomNavigationAction href="/equipment" label="Volunteer Opportunities" icon={<GroupIcon />} /> }
+              { <BottomNavigationAction href="/equipment" label="Lost & Found" icon={<AutoModeIcon />} /> }
+              { <BottomNavigationAction href="/equipment" label="Ride Sharing" icon={<TwoWheelerIcon />} />}
           </BottomNavigation>
       </Paper>
   );

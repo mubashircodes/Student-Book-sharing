@@ -15,7 +15,7 @@ function AuthPage({ signOut, user, children }) {
   return (
     <>
       <UserContext.Provider value={{
-        userEmail: user.signInDetails.loginId,
+        userEmail: user?.signInDetails?.loginId,
       }}>
         <TopNav signOut={signOut} user={user} />
         {/* <h1>Hello {user.username}</h1> */}
@@ -23,6 +23,8 @@ function AuthPage({ signOut, user, children }) {
         {children}
       </UserContext.Provider>
     </>
+
+
   );
 }
 

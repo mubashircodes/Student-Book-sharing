@@ -35,7 +35,7 @@ export default function Home({ params }) {
 }
 
 const RoomDetail = (room) => {
-    const [roomData, setRoomData] = useState(null);
+    const [room, setRoomData] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -74,9 +74,6 @@ const RoomDetail = (room) => {
                         <Typography gutterBottom variant="h5" component="div">
                             {room.title}
                         </Typography>
-                        <Typography variant="body1" color="text.secondary">
-                            {room.condition}
-                        </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Contact: {room.contact}
                         </Typography>
@@ -97,7 +94,7 @@ const RoomDetail = (room) => {
                     </CardActions>
                 </Card>
             ) : (
-                <Typography variant="body1">Book not found</Typography>
+                <Typography variant="body1">Room not found</Typography>
             )}
         </Box>
     );

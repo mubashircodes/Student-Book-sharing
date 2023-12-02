@@ -69,9 +69,6 @@ function AddEquipForm() {
     const handleCategoryChange = (event) => {
         setFormData({ ...formData, category: event.target.value });
     };
-    const handleCheckboxChange = (event) => {
-        setFormData({ ...formData, agreeToTerms: event.target.checked });
-    };
 
     const onChooseImage = (event) => {
         const file = event.target.files[0];
@@ -124,7 +121,7 @@ function AddEquipForm() {
             if (response.ok) {
                 const result = await response.json();
                 setSnackbarOpen(true);
-                console.log('Food added successfully:', result.data);
+                console.log('Equipment added successfully:', result.data);
                 // Redirect to the homepage
                 // OR if not using react-router-dom
                 window.location.href = '/equipment';
