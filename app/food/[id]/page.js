@@ -35,17 +35,17 @@ export default function Home({ params }) {
     );
 }
 
-const FoodDetail = (food) => {
-    const [foodData, setFoodData] = useState(null);
+const FoodDetail = (props) => {
+    const [food, setFood] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchFood = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/foods/${food.id}`);
+                const response = await fetch(`http://localhost:3000/api/food/${props.id}`);
                 if (response.ok) {
                     const data = await response.json();
-                    setFoodData(data.data);
+                    setFood(data.data);
                 } else {
                     console.error('Failed to fetch food:', response.statusText);
                 }
@@ -57,7 +57,7 @@ const FoodDetail = (food) => {
         };
 
         fetchFood();
-    }, [food.id]);
+    }, [props.id]);
 
     return (
         <Box mt={4}>
@@ -86,7 +86,7 @@ const FoodDetail = (food) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button variant="outlined" size="small" href={`/`}>
+                        <Button variant="outlined" size="small" href={`/food`}>
                             Go Back
                         </Button>
                     </CardActions>

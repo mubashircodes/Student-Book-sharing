@@ -22,38 +22,45 @@ import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { AppNavigation } from '../../src/app_navigation';
+import { ImageUploadButton } from '../../src/image_upload_button';
+import AuthPage from '../../src/auth_page';
+import { UserContext } from '../../src/auth_page';
 
 export default function Home() {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container fixed>
-        <Box sx={{ margin: 5 }} />
+    <AuthPage>
+      <React.Fragment>
+        <CssBaseline />
+        <Container fixed>
+          <Box sx={{ margin: 5 }} />
 
-        <Grid
-          container
-          justifyContent="center"
-          direction="row"
-          alignItems="center">
-          <Grid item xs={6}>
-            <AddBookForm />
+          <Grid
+            container
+            justifyContent="center"
+            direction="row"
+            alignItems="center">
+            <Grid item xs={6}>
+              <AddBookForm />
+            </Grid>
           </Grid>
-        </Grid>
 
-        <AppNavigation /> {/**App Navigation */}
-      </Container>
-    </React.Fragment>
+          <AppNavigation /> {/**App Navigation */}
+        </Container>
+      </React.Fragment>
+    </AuthPage>
   );
 }
 
 function AddBookForm() {
+  const user = React.useContext(UserContext);
   const [formData, setFormData] = React.useState({
     title: '',
     author: '',
     address: '',
     condition: 'New',
     price: 0,
-    image: 'https://m.media-amazon.com/images/I/61FmuzUH8AL._AC_UF1000,1000_QL80_.jpg'
+    image: '',
+    userEmail: user.userEmail,
   });
   const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 
@@ -116,6 +123,14 @@ function AddBookForm() {
           Book added successfully!
         </MuiAlert>
       </Snackbar>
+
+      <Box sx={{ margin: 2 }}>
+        <ImageUploadButton
+          image={formData.image}
+          onChooseImage={image => setFormData({ ...formData, image: image })}
+        />
+      </Box>
+
 
       <AppInput
         placeholder="Enter book title"

@@ -17,24 +17,30 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import { AppNavigation } from './src/app_navigation';
+import AuthPage from './src/auth_page';
+import Avatar from '@mui/material/Avatar';
+import CardHeader from '@mui/material/CardHeader';
+import { deepPurple } from '@mui/material/colors';
 
 export default function Home() {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container fixed>
-        <Box sx={{ margin: 5 }} />
-        <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <AppMenu />
+    <AuthPage>
+      <React.Fragment>
+        <CssBaseline />
+        <Container fixed>
+          <Box sx={{ margin: 5 }} />
+          <Grid container spacing={2}>
+            <Grid item xs={2}>
+              <AppMenu />
+            </Grid>
+            <Grid item xs={10}>
+              <Listofbooks />
+            </Grid>
           </Grid>
-          <Grid item xs={10}>
-            <Listofbooks />
-          </Grid>
-        </Grid>
-        <AppNavigation /> {/**App Navigation */}
-      </Container>
-    </React.Fragment>
+          <AppNavigation /> {/**App Navigation */}
+        </Container>
+      </React.Fragment>
+    </AuthPage>
   );
 }
 
@@ -89,6 +95,15 @@ async function fetchBooks() {
 function BookCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
+      {props.userEmail && (
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: deepPurple[500] }} aria-label="recipe">
+              {props.userEmail.slice(0, 1).toUpperCase()}
+            </Avatar>
+          }
+        />
+      )}
       <CardMedia
         sx={{ height: 140 }}
         image={props.image}

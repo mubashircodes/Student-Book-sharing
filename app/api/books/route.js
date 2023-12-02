@@ -24,10 +24,11 @@ export async function POST(request) {
     condition,
     price,
     image,
+    userEmail,
   } = await request.json();
 
   // Validate required fields
-  if (!title || !author || !address || !condition || !price || !image) {
+  if (!title || !author || !address || !condition || !price || !image || !userEmail) {
     return new Response('Missing required fields', { status: 400 });
   }
 
@@ -43,6 +44,7 @@ export async function POST(request) {
     condition,
     price,
     image,
+    userEmail,
     createdAt: new Date(),
   };
 
