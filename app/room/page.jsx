@@ -1,6 +1,5 @@
 'use client'
-
-import * as React from 'react';
+import React from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,8 +14,8 @@ import Paper from '@mui/material/Paper';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
-import { AppNavigation } from '../src/app_navigation';
 import AddHomeIcon from '@mui/icons-material/AddHome';
+import { AppNavigation } from '../src/app_navigation';
 
 export default function Home() {
   return (
@@ -25,14 +24,14 @@ export default function Home() {
       <Container fixed>
         <Box sx={{ margin: 5 }} />
         <Grid container spacing={2}>
-          <Grid item xs={2}>
+          <Grid item xs={3}>
             <AppMenu />
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={9}>
             <RoomCardForm />
           </Grid>
         </Grid>
-        <AppNavigation /> {/**App Navigation */}
+        <AppNavigation />
       </Container>
     </React.Fragment>
   );
@@ -40,22 +39,22 @@ export default function Home() {
 
 function AppMenu() {
   return (
-    <Paper>
+    <Paper sx={{ padding: 2 }}>
       <MenuList>
-        <MenuItem href="/room/add" component="a">
-          <AddHomeIcon />
+        <MenuItem href="/room/add" component="a" sx={{ display: 'flex', alignItems: 'center' }}>
+          <AddHomeIcon sx={{ marginRight: 1 }} />
           <ListItemText>Rooms</ListItemText>
         </MenuItem>
       </MenuList>
     </Paper>
-  )
+  );
 }
 
 function RoomCardForm() {
   const [rooms, setRooms] = React.useState([]);
 
   React.useEffect(function () {
-    fetchRoom().then(resp => {
+    fetchRoom().then((resp) => {
       setRooms(resp);
     });
   }, []);
@@ -90,17 +89,13 @@ async function fetchRoom() {
 function RoomCard(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        sx={{ height: 140 }}
-        image={props.image}
-        title={props.title}
-      />
+      <CardMedia sx={{ height: 140 }} image={props.image} title={props.title} />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography variant="h6" gutterBottom component="div">
           {props.title}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          {props.condition}
+        <Typography variant="body2" color="text.secondary">
+          Condition: {props.condition}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Contact: {props.contact}
@@ -108,11 +103,11 @@ function RoomCard(props) {
         <Typography variant="body2" color="text.secondary">
           Price: {props.price}
         </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {props.description}
+        <Typography variant="body2" color="text.secondary">
+          Description: {props.description}
         </Typography>
-        <Typography gutterBottom variant="h5" component="div">
-          {props.address}
+        <Typography variant="body2" color="text.secondary">
+          Address: {props.address}
         </Typography>
       </CardContent>
       <CardActions>
@@ -122,12 +117,4 @@ function RoomCard(props) {
       </CardActions>
     </Card>
   );
-}
-
-function formatPrice(price) {
-  if (!price) {
-    return 'FREE';
-  }
-
-  return `₹${price.toLocaleString()}`;
 }

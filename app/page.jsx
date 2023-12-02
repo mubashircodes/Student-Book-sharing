@@ -1,10 +1,6 @@
 'use client'
 
 import * as React from 'react';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import FoodBankIcon from '@mui/icons-material/FoodBank';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
